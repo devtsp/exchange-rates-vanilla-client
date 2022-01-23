@@ -10,28 +10,47 @@
 			integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 			crossorigin="anonymous"
 		/>
-    <link rel="stylesheet" href="./css/style.css">
-		<title>Exhange Rates Interface</title>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<link rel="stylesheet" href="./css/style.css" />
+		<title>Exchange Rates</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-light bg-light">
-			<form class="container-md justify-content-start">
-				<button
-					id="EUR"
-					class="btn btn-sm btn-outline-secondary me-3"
-					type="button"
-				>
+		<div class="container p-0 mt-3 border border-1 rounded-3">
+			<p class="p-3 m-0 text-black-50 d-inline-block">
+				Select a base currency:
+			</p>
+			<div id="base-selection-panel" class="container d-inline-block">
+				<button id="EUR" class="btn btn-sm btn-outline-dark mx-2" type="button">
 					EUR
 				</button>
-				<button id="USD" class="btn btn-sm btn-outline-secondary" type="button">
+				<button id="USD" class="btn btn-sm btn-outline-dark mx-2" type="button">
 					USD
 				</button>
-			</form>
-		</nav>
+				<button id="ARS" class="btn btn-sm btn-outline-dark mx-2" type="button">
+					ARS
+				</button>
+				<button id="USD" class="btn btn-sm btn-outline-dark mx-2" type="button">
+					BRL
+				</button>
+				<button id="BTC" class="btn btn-sm btn-outline-dark mx-2" type="button">
+					BTC
+				</button>
+			</div>
+			<div class="container mt-3">
+				<table class="table table-sm table-hover">
+					<thead>
+						<tr>
+							<th scope="col">Currency</th>
+							<th scope="col">Exchange Rate <span id="base-selected" class="badge bg-primary mx-2 fs-6"></span></th>
+						</tr>
+					</thead>
+					<tbody id="table-contents">
+          </tbody>
+				</table>
+			</div>
+		</div>
 
-    <div id="result" class="container">
-
-    </div>
+    <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
 
 		<script src="./src/main.js"></script>
 		<script
