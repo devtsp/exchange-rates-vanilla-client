@@ -15,42 +15,73 @@
 		<title>Exchange Rates</title>
 	</head>
 	<body>
-		<div class="container p-0 mt-3 border border-1 rounded-3">
-			<p class="p-3 m-0 text-black-50 d-inline-block">
-				Select a base currency:
-			</p>
-			<div id="base-selection-panel" class="container d-inline-block">
-				<button id="EUR" class="btn btn-sm btn-outline-dark mx-2" type="button">
-					EUR
-				</button>
-				<button id="USD" class="btn btn-sm btn-outline-dark mx-2" type="button">
-					USD
-				</button>
-				<button id="ARS" class="btn btn-sm btn-outline-dark mx-2" type="button">
-					ARS
-				</button>
-				<button id="USD" class="btn btn-sm btn-outline-dark mx-2" type="button">
-					BRL
-				</button>
-				<button id="BTC" class="btn btn-sm btn-outline-dark mx-2" type="button">
-					BTC
-				</button>
+		<div class="container">
+			<div
+				id="loading-mask"
+				class="d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 visually-hidden"
+			>
+				<div
+					class="spinner-border"
+					style="width: 3rem; height: 3rem"
+					role="status"
+				></div>
+				<br />
+				<span class="d-block">Loading...</span>
 			</div>
-			<div class="container mt-3">
-				<table class="table table-sm table-hover">
-					<thead>
-						<tr>
-							<th scope="col">Currency</th>
-							<th scope="col">Exchange Rate <span id="base-selected" class="badge bg-primary mx-2 fs-6"></span></th>
-						</tr>
-					</thead>
-					<tbody id="table-contents">
-          </tbody>
-				</table>
+			<div class="container p-0 mt-3 border border-1 rounded-3">
+				<p class="p-3 m-0 text-black-50 d-inline-block">
+					Select a base currency:
+				</p>
+				<div id="base-selection-panel" class="container d-inline-block">
+					<button
+						id="EUR"
+						class="btn btn-sm btn-outline-dark mx-2"
+						type="button"
+					>
+						EUR
+					</button>
+					<button
+						id="USD"
+						class="btn btn-sm btn-outline-dark mx-2"
+						type="button"
+					>
+						USD
+					</button>
+					<button
+						id="ARS"
+						class="btn btn-sm btn-outline-dark mx-2"
+						type="button"
+					>
+						ARS
+					</button>
+					<button
+						id="USD"
+						class="btn btn-sm btn-outline-dark mx-2"
+						type="button"
+					>
+						BRL
+					</button>
+				</div>
+				<div class="container mt-3">
+					<table class="table table-sm table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Currency</th>
+								<th scope="col">Exchange Rate</th>
+							</tr>
+						</thead>
+						<tbody id="table-contents"></tbody>
+					</table>
+				</div>
+				<div class="container py-2">
+					<div
+						id="error-message"
+						class="alert alert-danger d-none"
+						role="alert"
+					></div>
+				</div>
 			</div>
 		</div>
-
-    <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
 
 		<script src="./src/main.js"></script>
 		<script
