@@ -33,27 +33,22 @@ const handleSuccess = data => {
 	$tbody.querySelector('tr:first-child').classList.add('table-success');
 };
 
-const handleFail = () => {
+const handleFail = (err) => {
+  $loadingMask.classList.toggle('visually-hidden')
 	$errorMessage.classList.contains('d-none') &&
 		$errorMessage.classList.remove('d-none');
-	$errorMessage.innerText = `An error ocurred fetching the data. Please try again later`;
+	$errorMessage.innerText = `An error ocurred with the server: "${err.message}"`;
 };
 
 const fetchData = (URL, base) => {
-	try {
-		fetch(URL)
-			.then(resp => resp.json())
-			.then(resp => {
-				if (resp.result == 'success') {
-					handleSuccess(resp);
-				} else {
-					handleFail();
-				}
-			})
-			.catch(err =>
-				console.error('There was an error fetching the requested data: ', err)
-			);
-	} catch (err) {
-		handleFail();
-	}
+  fetch(URL)
+    .then(resp => resp.json())
+    .then(resp => {
+      if (resp.result == 'success') {
+        handleSuccess(resp);
+      } else {
+        handleFail();
+      }
+    })
+    .catch(err => handleFail(err));
 };
