@@ -47,7 +47,8 @@
 							aria-controls="exchange-rates"
 							aria-selected="true"
 						>
-							Global Exchange Rates
+							<span class="d-inline d-sm-none">Exchange Rates</span>
+							<span class="d-none d-sm-inline ">Global Exchange Rates</span>
 						</button>
 					</li>
 					<li id="pair-conversion" class="nav-item" role="presentation">
@@ -61,7 +62,8 @@
 							aria-controls="pair-conversion"
 							aria-selected="false"
 						>
-							Pair Conversion
+							<span class="d-inline d-sm-none">Conversion</span>
+							<span class="d-none d-sm-inline">Pair Conversion</span>
 						</button>
 					</li>
 				</ul>
@@ -80,7 +82,7 @@
 					>
 						<select
 							name="base-currency"
-							class="form-select form-select-sm w-25 me-3"
+							class="form-select form-select-sm w-auto me-3"
 							aria-label="Select Base Currency"
 							id="base-selection"
 						></select>
@@ -93,7 +95,7 @@
 						</button>
 					</form>
 					<div id="table-container" class="container">
-						<table class="table table-sm table-hover ">
+						<table class="table table-sm table-hover">
 							<thead id="table-head">
 								<tr>
 									<th scope="col"></th>
