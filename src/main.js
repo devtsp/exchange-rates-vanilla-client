@@ -1,48 +1,47 @@
 const API_URL = 'https://v6.exchangerate-api.com/v6';
 const KEY = 'ec7eec5e7967904472b9cf30';
 const $tableContainer = document.querySelector('#table-container');
+const $thead = document.querySelector('#table-head');
 const $tbody = document.querySelector('#table-contents');
 const $errorMessage = document.querySelector('#error-message');
 const $loadingMask = document.querySelector('#loading-mask');
-const $globalExhangeRatesButton = document.querySelector(
-	'#global-exchange-rates'
-);
-const $pairConversionButton = document.querySelector('#pair-conversion');
+const $exchangeRates = document.querySelector('#global-exchange-rates-tab');
+const $pairConversion = document.querySelector('#pair-conversion-tab');
 const $baseSelectionForm = document.querySelector('#base-selection-form');
 const $baseSelection = document.querySelector('#base-selection');
-const $baseButton = document.querySelector('#base-button');
+const $searchButton = document.querySelector('#search-button');
 
-$globalExhangeRatesButton.onclick = e => {
-	e.preventDefault();
+
+$loadingMask.classList.toggle('visually-hidden');
+$tbody.replaceChildren();
+
+
+
+$searchButton.onclick = e => {
+  e.preventDefault();
 	$loadingMask.classList.toggle('visually-hidden');
 	$tbody.replaceChildren();
-	const URL = `${API_URL}/${KEY}/latest/USD`;
-	fetchData(URL);
-};
-
-$baseButton.onclick = e => {
-	e.preventDefault();
-	$loadingMask.classList.toggle('visually-hidden');
-	$tbody.replaceChildren();
-  base = $baseSelectionForm['base-currency'].value
+	base = $baseSelectionForm['base-currency'].value;
 	const URL = `${API_URL}/${KEY}/latest/${base}`;
 	fetchData(URL);
 };
 
 const fetchData = URL => {
-	fetch(URL)
-		.then(resp => resp.json())
-		.then(resp => {
-			if (resp.result == 'success') {
-				console.log('success');
-				handleSuccess(resp);
-			} else {
-				console.log('fail');
-				handleFail();
-			}
-		})
-		.catch(err => handleFail(err));
+  fetch(URL)
+    .then(resp => resp.json())
+    .then(resp => {
+      if (resp.result == 'success') {
+        console.log('success');
+        handleSuccess(resp);
+      } else {
+        console.log('fail');
+        handleFail();
+      }
+    })
+    .catch(err => handleFail(err));
 };
+
+fetchData(`${API_URL}/${KEY}/latest/USD`);
 
 const handleSuccess = data => {
 	$baseSelectionForm.classList.remove('visually-hidden');
@@ -51,9 +50,9 @@ const handleSuccess = data => {
 	for (let currency in currencies) {
 		const $option = document.createElement('option');
 		$option.innerText = currency;
-    $option.value = currency;
+		$option.value = currency;
 		$baseSelection.appendChild($option);
-    const $row = document.createElement('tr');
+		const $row = document.createElement('tr');
 		const $currency = document.createElement('th');
 		$currency.setAttribute('scope', 'row');
 		const $rate = document.createElement('td');
@@ -65,6 +64,8 @@ const handleSuccess = data => {
 	}
 	$loadingMask.classList.toggle('visually-hidden');
 	$tbody.querySelector('tr:first-child').classList.add('table-success');
+  $thead.querySelector('th:first-child').innerText = 'Currencies'
+  $thead.querySelector('th:last-child').innerText = 'Exchange Rate'
 	$tableContainer.classList.remove('visually-hidden');
 };
 
@@ -74,3 +75,5 @@ const handleFail = err => {
 		$errorMessage.classList.remove('d-none');
 	$errorMessage.innerText = `An error ocurred with the server: "${err.message}"`;
 };
+
+
