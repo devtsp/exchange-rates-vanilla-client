@@ -15,15 +15,58 @@
 		<title>Exchange Rates</title>
 	</head>
 	<body>
-		<div class="container pt-2">
-      <div class="btn-group w-100">
-        <button type="button" class="btn btn-outline-secondary w-100">
-          Global Exchange Rates
-        </button>
-        <button type="button" class="btn btn-outline-secondary w-100">
-          Pair Conversion
-        </button>
-      </div>
+		<div id="app" class="container pt-2">
+			<div id="section-selector" class="btn-group w-100 mb-3">
+				<button
+					id="global-exchange-rates"
+					type="button"
+					class="btn btn-outline-secondary w-100"
+				>
+					Global Exchange Rates
+				</button>
+				<button
+					id="pair-conversion"
+					type="button"
+					class="btn btn-outline-secondary w-100"
+				>
+					Pair Conversion
+				</button>
+			</div>
+			<form
+				id="base-selection-form"
+				class="mb-2 d-flex justify-content-center visually-hidden"
+			>
+				<select 
+          name="base-currency"
+					class="form-select form-select-sm w-50 me-3"
+					aria-label="Select Base Currency"
+					id="base-selection"
+				>
+					<option>Select base currency</option>
+				</select>
+				<button id="base-button" type="submit" class="btn btn-outline-success btn-sm px-2">
+					Search
+				</button>
+			</form>
+			<div id="table-container" class="container mt-3 visually-hidden">
+				<table class="table table-sm table-hover">
+					<thead>
+						<tr>
+							<th scope="col">Currency</th>
+							<th scope="col">Exchange Rate</th>
+						</tr>
+					</thead>
+					<tbody id="table-contents"></tbody>
+				</table>
+			</div>
+
+			<!-- ERROR  -->
+			<div
+				id="error-message"
+				class="alert alert-danger d-none"
+				role="alert"
+			></div>
+			<!-- LOADING -->
 			<div
 				id="loading-mask"
 				class="d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 visually-hidden"
@@ -35,59 +78,6 @@
 				></div>
 				<br />
 				<span class="d-block">Loading...</span>
-			</div>
-			<div class="container p-0 mt-2 border border-1 rounded-3">
-				<p class="p-3 m-0 text-black-50 d-inline-block">
-					Select a base currency:
-				</p>
-				<div id="base-selection-panel" class="container d-inline-block">
-					<button
-						id="EUR"
-						class="btn btn-sm btn-outline-dark mx-2"
-						type="button"
-					>
-						EUR
-					</button>
-					<button
-						id="USD"
-						class="btn btn-sm btn-outline-dark mx-2"
-						type="button"
-					>
-						USD
-					</button>
-					<button
-						id="ARS"
-						class="btn btn-sm btn-outline-dark mx-2"
-						type="button"
-					>
-						ARS
-					</button>
-					<button
-						id="USD"
-						class="btn btn-sm btn-outline-dark mx-2"
-						type="button"
-					>
-						BRL
-					</button>
-				</div>
-				<div class="container mt-3">
-					<table class="table table-sm table-hover">
-						<thead>
-							<tr>
-								<th scope="col">Currency</th>
-								<th scope="col">Exchange Rate</th>
-							</tr>
-						</thead>
-						<tbody id="table-contents"></tbody>
-					</table>
-				</div>
-				<div class="container py-2">
-					<div
-						id="error-message"
-						class="alert alert-danger d-none"
-						role="alert"
-					></div>
-				</div>
 			</div>
 		</div>
 
