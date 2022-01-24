@@ -33,9 +33,9 @@
 
 
 	<body>
-		<div id="app" class="container pt-4">
+		<div id="app" class="container vh-100 pt-4">
 			<nav>
-				<ul id="section-selector" class="nav nav-tabs mb-4" role="tablist">
+				<ul id="section-selector" class="nav nav-tabs" role="tablist">
 					<li class="nav-item" role="presentation">
 						<button
 							id="global-exchange-rates-tab"
@@ -67,7 +67,7 @@
 				</ul>
 			</nav>
 
-			<div class="tab-content" id="tab-content-all">
+			<div class="tab-content border border-top-0 pt-4 h-75 overflow-auto" id="tab-content-all">
 				<div
 					id="global-exchange-rates-section"
 					class="tab-pane fade show active"
@@ -76,7 +76,7 @@
 				>
 					<form
 						id="base-selection-form"
-						class="mb-2 d-flex justify-content-start"
+						class="mb-3 px-3 d-flex justify-content-start"
 					>
 						<select
 							name="base-currency"
@@ -92,8 +92,8 @@
 							Search
 						</button>
 					</form>
-					<div id="table-container" class="container mt-3">
-						<table class="table table-sm table-hover">
+					<div id="table-container" class="container">
+						<table class="table table-sm table-hover ">
 							<thead id="table-head">
 								<tr>
 									<th scope="col"></th>
@@ -127,7 +127,7 @@
 			<!-- LOADING -->
 			<div
 				id="loading-mask"
-				class="d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 visually-hidden"
+				class="d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 vh-100 vw-100 opacity-25 bg-secondary visually-hidden"
 			>
 				<div
 					class="spinner-border"
