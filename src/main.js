@@ -11,14 +11,11 @@ const $baseSelectionForm = document.querySelector('#base-selection-form');
 const $baseSelection = document.querySelector('#base-selection');
 const $searchButton = document.querySelector('#search-button');
 
-
-$loadingMask.classList.toggle('visually-hidden');
+// $loadingMask.classList.toggle('visually-hidden');
 $tbody.replaceChildren();
 
-
-
 $searchButton.onclick = e => {
-  e.preventDefault();
+	e.preventDefault();
 	$loadingMask.classList.toggle('visually-hidden');
 	$tbody.replaceChildren();
 	base = $baseSelectionForm['base-currency'].value;
@@ -27,21 +24,21 @@ $searchButton.onclick = e => {
 };
 
 const fetchData = URL => {
-  fetch(URL)
-    .then(resp => resp.json())
-    .then(resp => {
-      if (resp.result == 'success') {
-        console.log('success');
-        handleSuccess(resp);
-      } else {
-        console.log('fail');
-        handleFail();
-      }
-    })
-    .catch(err => handleFail(err));
+	fetch(URL)
+		.then(resp => resp.json())
+		.then(resp => {
+			if (resp.result == 'success') {
+				console.log('success');
+				handleSuccess(resp);
+			} else {
+				console.log('fail');
+				handleFail();
+			}
+		})
+		.catch(err => handleFail(err));
 };
 
-fetchData(`${API_URL}/${KEY}/latest/USD`);
+// fetchData(`${API_URL}/${KEY}/latest/USD`);
 
 const handleSuccess = data => {
 	$baseSelectionForm.classList.remove('visually-hidden');
@@ -55,17 +52,22 @@ const handleSuccess = data => {
 		const $row = document.createElement('tr');
 		const $currency = document.createElement('th');
 		$currency.setAttribute('scope', 'row');
+		
 		const $rate = document.createElement('td');
+		
 		$currency.innerText = currency;
 		$rate.innerText = data.conversion_rates[currency];
 		$tbody.appendChild($row);
 		$row.appendChild($currency);
 		$row.appendChild($rate);
+    $row.classList.add('d-flex', 'overflow-auto')
+    $rate.classList.add('w-50');
+    $currency.classList.add('w-50');
 	}
 	$loadingMask.classList.toggle('visually-hidden');
 	$tbody.querySelector('tr:first-child').classList.add('table-success');
-  $thead.querySelector('th:first-child').innerText = 'Currencies'
-  $thead.querySelector('th:last-child').innerText = 'Exchange Rate'
+	$thead.querySelector('th:first-child').innerText = 'Currencies';
+	$thead.querySelector('th:last-child').innerText = 'Exchange Rate';
 	$tableContainer.classList.remove('visually-hidden');
 };
 
@@ -75,5 +77,3 @@ const handleFail = err => {
 		$errorMessage.classList.remove('d-none');
 	$errorMessage.innerText = `An error ocurred with the server: "${err.message}"`;
 };
-
-

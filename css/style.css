@@ -1,5 +1,7 @@
 body {
 	min-width: 300px;
+  max-width: 576px;
+  height: 100vh;
 }
 
 #loading-mask {
