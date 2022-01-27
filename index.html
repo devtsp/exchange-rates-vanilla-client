@@ -33,29 +33,28 @@
 		<title>Exchange Rates</title>
 	</head>
 
-  <!-- BODY -->
+	<!-- BODY -->
 	<body class="d-flex flex-column m-auto">
-
-    <!-- LOADING (ABSOLULTE RELATIVE TO BODY)-->
+		<!-- LOADING -->
 		<div
-      id="loading-mask"
-      class="d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 vh-100 vw-100 opacity-25 bg-secondary visually-hidden"
-    >
-      <div
-        class="spinner-border"
-        style="width: 3rem; height: 3rem"
-        role="status"
-      ></div>
-      <br />
-      <span class="d-block">Loading...</span>
-    </div>
+			id="loading-mask"
+			class="d-flex flex-column justify-content-center align-items-center position-absolute top-0 start-0 vh-100 vw-100 opacity-25 bg-secondary visually-hidden"
+		>
+			<div
+				class="spinner-border"
+				style="width: 3rem; height: 3rem"
+				role="status"
+			></div>
+			<br />
+			<span class="d-block">Loading...</span>
+		</div>
 
-    <!-- HEADER -->
-		<div id="header" class="container bg-light text-center">
+		<!-- HEADER -->
+		<div id="header" class="container-fluid headerColor text-center">
 			<header>
-				<h6 class="m-0 py-3">
+				<h6 class="m-0 py-4">
 					<a
-						class="text-black-50"
+            class="text-white"
 						href="https://www.exchangerate-api.com/"
 						target="_blank"
 						>exhangerate-api.com</a
@@ -64,18 +63,19 @@
 			</header>
 		</div>
 
-    <!-- MAIN SECTION ==================================================================-->
-		<div id="app" class="container py-2 d-flex flex-column flex-fill overflow-auto">
-
-      <!-- NAV TABS -->
+		<!-- MAIN SECTION ==================================================================-->
+		<div
+			id="app"
+			class="container py-4 d-flex flex-column flex-fill overflow-auto"
+		>
+			<!-- NAV TABS -->
 			<nav>
-				<ul id="section-selector" class="nav nav-tabs" role="tablist">
+				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item" role="presentation">
 						<button
-							id="global-exchange-rates-tab"
 							class="nav-link active"
 							data-bs-toggle="tab"
-							data-bs-target="#global-exchange-rates-section"
+							data-bs-target="#exchange-rates"
 							type="button"
 							role="tab"
 							aria-controls="exchange-rates"
@@ -85,12 +85,11 @@
 							<span class="d-none d-sm-inline">Global Exchange Rates</span>
 						</button>
 					</li>
-					<li id="pair-conversion" class="nav-item" role="presentation">
+					<li class="nav-item" role="presentation">
 						<button
-							id="pair-conversion-tab"
 							class="nav-link"
 							data-bs-toggle="tab"
-							data-bs-target="#pair-conversion-section"
+							data-bs-target="#pair-conversion"
 							type="button"
 							role="tab"
 							aria-controls="pair-conversion"
@@ -103,100 +102,153 @@
 				</ul>
 			</nav>
 
-      <!-- TAB CONTENTS ALL -->
+			<!-- TAB CONTENTS ALL -->
 			<div
-				class="tab-content border border-top-0 pt-4 d-flex flex-column overflow-auto flex-grow-1"
+				class="tab-content border border-top-0 d-flex flex-fill flex-column overflow-auto"
 				id="tab-content-all"
 			>
-        <!-- TAB PANE EXCHANGE RATES =============================-->
+				<!-- TAB PANE EXCHANGE RATES =============================-->
 				<div
-					id="global-exchange-rates-section"
-					class="tab-pane fade show active d-flex flex-column overflow-auto flex-grow-1"
+					class="tab-pane fade show active flex-fill overflow-auto"
 					aria-labelledby="global-exchange-rates-tab"
 					role="tabpanel"
+					id="exchange-rates"
 				>
-          <!-- SELECTION FORM -->
-					<form
-						id="base-selection-form"
-						class="mb-3 px-3 pt-1 d-flex justify-content-start"
-					>
-						<select
-							name="base-currency"
-							class="form-select form-select-sm w-auto me-3"
-							aria-label="Select Base Currency"
-							id="base-selection"
-						></select>
-						<button
-							id="search-button"
-							type="submit"
-							class="btn btn-outline-success btn-sm px-2"
-						>
-							Search
-						</button>
-					</form>
+					<!-- EXCHANGE RATES FORM -->
 
-          <!-- TABLE -->
+					<div class="container p-3 position-relative">
+						<form class="px-3 py-3 position-sticky top-0 bg-white">
+							<div class="row">
+								<div class="col">
+									<label class="form-label" for="rates-base">
+										Select base currency
+									</label>
+									<select
+										id="rates-base"
+										name="rates-base"
+										class="form-select form-select-sm w-100 me-3"
+									></select>
+								</div>
+								<div class="col position-relative">
+									<button
+										class="btn btn-outline-success btn-sm px-2 position-absolute bottom-0 left-0"
+									>
+										Search
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<!-- EXCHANGE RATES RESULTS -->
+
 					<div
-						id="table-container"
-						class="container d-flex flex-column align-items-stretch overflow-auto"
+						id="table"
+						class="container d-flex flex-column align-items-stretch overflow-auto d-none"
 					>
 						<table
 							class="table table-sm table-hover d-flex flex-column align-items-stretch overflow-auto"
 						>
-							<thead id="table-head">
+							<thead>
 								<tr class="d-flex">
 									<th scope="col" class="w-50"></th>
 									<th scope="col" class="w-50"></th>
 								</tr>
 							</thead>
-							<tbody id="table-contents" class="overflow-auto"></tbody>
+							<tbody class="overflow-auto"></tbody>
 						</table>
 					</div>
-          <!-- ERROR PANE 1 ===========================================-->
-          <div
-          id="error-message"
-          class="alert alert-danger mx-4 text-center"
-          role="alert"
-          >
-          Error sample
-          </div>
+
+					<!-- ERROR -->
+					<div
+						class="error alert alert-danger mx-4 text-center d-none"
+						role="alert"
+					></div>
 				</div>
 
-        <!-- TAB-PANE CONVERSION ======================================-->
+				<!-- TAB-PANE CONVERSION ======================================-->
 				<div
-					id="pair-conversion-section"
+					id="pair-conversion"
 					class="tab-pane fade"
 					aria-labelledby="exchange-rates-tab"
 					role="tabpanel"
 				>
-        <!-- ERROR PANE 2 ===========================================-->
-					<div>Working on it!</div>
-          <div
-          id="error-message"
-          class="alert alert-danger mx-4 text-center"
-          role="alert"
-          >
-          Error sample
-          </div>
+					<!-- CONVERSION FORM -->
+					<div class="container pt-3">
+						<form class="px-3 py-3 needs-validation" novalidate>
+              <div class=" mb-3">
+                <label for="amount" class="form-label">Amount to convert</label>
+                <input
+                  name="amount"
+                  id="amount"
+                  type="number"
+                  class="form-control form-control-sm w-50"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Please select an amount to convert.
+                </div>
+              </div>
+							<div class="row">
+								<div class="col">
+									<label for="conversion-base" class="form-label"
+										>Base currency</label
+									>
+									<select
+										name="base"
+										class="form-select form-select-sm w-100"
+										aria-label="Select Base Currency"
+										id="conversion-base"
+									></select>
+								</div>
+								<div class="col">
+									<label for="target" class="form-label">Target currency</label>
+									<select
+										name="target"
+										class="form-select form-select-sm w-100"
+										aria-label="Select Target Currency"
+										id="target"
+									></select>
+								</div>
+								<div class="col position-relative">
+									<button
+										type="submit"
+										class="btn btn-outline-success btn-sm px-2 align-text-bottom position-absolute bottom-0 left-0"
+									>
+										Convert
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<!-- CONVERSION RESULTS -->
+					<div class="container-fluid py-4 px-5 w-auto">
+						<p
+							class="p-4 border-3 border-start border-info rounded rounded-3 bg-light visually-hidden"
+						>
+							<span class="text-black-50 fs-3"></span><br />
+							<span class="text-black fs-1"></span>
+						</p>
+					</div>
+
+					<!-- ERROR -->
+					<div
+						class="error alert alert-danger mx-4 text-center d-none"
+						role="alert"
+					></div>
 				</div>
-
-        
-
-
 			</div>
-
-			
 		</div>
 
-
-    <!-- FOOTER ===========================================================================-->
-		<div class="container-fluid ">
+		<!-- FOOTER ===========================================================================-->
+		<div class="container-fluid px-4">
 			<footer>
 				<div class="d-flex pb-3 align-items-center justify-content-center">
 					<a
 						href="https://github.com/devtsp/exchange-rates-api-interface"
 						target="_blank"
-						class="d-flex w-100 align-items-center justify-content-center py-0 px-2 text-decoration-none text-black border border-2 rounded rounded-3 shadow"
+						class="d-flex align-items-center justify-content-center text-decoration-none text-black"
 					>
 						<i class="bi bi-github fs-4" aria-label="Github"></i>
 						<span class="ps-3">Source Code</span>

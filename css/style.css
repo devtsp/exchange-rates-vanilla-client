@@ -1,9 +1,20 @@
-body {
-	min-width: 300px;
-  max-width: 576px;
+body {	
   height: 100vh;
+}
+
+#app {
+  min-width: 300px;
+  max-width: 576px;
 }
 
 #loading-mask {
 	z-index: 2000;
+}
+
+#base-selection-form {
+  z-index: 1999;
+}
+
+.headerColor {
+  background-color: rgb(18, 27, 70);
 }

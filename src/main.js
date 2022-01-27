@@ -1,79 +1,138 @@
 const API_URL = 'https://v6.exchangerate-api.com/v6';
 const KEY = 'ec7eec5e7967904472b9cf30';
-const $tableContainer = document.querySelector('#table-container');
-const $thead = document.querySelector('#table-head');
-const $tbody = document.querySelector('#table-contents');
-const $errorMessage = document.querySelector('#error-message');
-const $loadingMask = document.querySelector('#loading-mask');
-const $exchangeRates = document.querySelector('#global-exchange-rates-tab');
-const $pairConversion = document.querySelector('#pair-conversion-tab');
-const $baseSelectionForm = document.querySelector('#base-selection-form');
-const $baseSelection = document.querySelector('#base-selection');
-const $searchButton = document.querySelector('#search-button');
 
-// $loadingMask.classList.toggle('visually-hidden');
-$tbody.replaceChildren();
-
-$searchButton.onclick = e => {
-	e.preventDefault();
-	$loadingMask.classList.toggle('visually-hidden');
-	$tbody.replaceChildren();
-	base = $baseSelectionForm['base-currency'].value;
-	const URL = `${API_URL}/${KEY}/latest/${base}`;
-	fetchData(URL);
+const get = selector => {
+	return document.querySelector(selector);
 };
 
-const fetchData = URL => {
+const $exchangeRatesForm = get('#exchange-rates form');
+const $table = get('#table');
+const $thead = get('#table thead');
+const $tbody = get('#table tbody');
+
+const $errorPlaceholders = document.querySelectorAll('.error');
+const $loadingMask = get('#loading-mask');
+
+const $pairConversionForm = get('#pair-conversion form');
+const $pairConversionResult = get('#pair-conversion p');
+
+const fetchData = (URL, callback) => {
 	fetch(URL)
 		.then(resp => resp.json())
 		.then(resp => {
 			if (resp.result == 'success') {
-				console.log('success');
-				handleSuccess(resp);
+				callback(resp);
 			} else {
-				console.log('fail');
-				handleFail();
+				handleFail(resp);
 			}
 		})
 		.catch(err => handleFail(err));
 };
 
-// fetchData(`${API_URL}/${KEY}/latest/USD`);
+const displayConversion = data => {
+	$pairConversionResult.children[0].innerText = `${$pairConversionForm['amount'].value} ${data.base_code} equals: `;
+	$pairConversionResult.children[2].innerText = ` ${data.conversion_result} ${data.target_code}`;
+  $pairConversionResult.classList.contains('visually-hidden') &&
+		$pairConversionResult.classList.remove('visually-hidden');
+};
 
-const handleSuccess = data => {
-	$baseSelectionForm.classList.remove('visually-hidden');
-	console.log(data);
-	const currencies = data.conversion_rates;
-	for (let currency in currencies) {
+const loadAvailableCurrencies = data => {
+	for (let currency in data.conversion_rates) {
 		const $option = document.createElement('option');
 		$option.innerText = currency;
 		$option.value = currency;
-		$baseSelection.appendChild($option);
+		$exchangeRatesForm['rates-base'].appendChild($option.cloneNode(true));
+		$pairConversionForm['base'].appendChild($option.cloneNode(true));
+		$pairConversionForm['target'].appendChild($option);
+	}
+};
+
+const displayExchangeRatesTable = data => {
+  $table.classList.remove('d-none')
+	const currencies = data.conversion_rates;
+	for (let currency in currencies) {
 		const $row = document.createElement('tr');
 		const $currency = document.createElement('th');
 		$currency.setAttribute('scope', 'row');
-		
 		const $rate = document.createElement('td');
-		
 		$currency.innerText = currency;
 		$rate.innerText = data.conversion_rates[currency];
 		$tbody.appendChild($row);
 		$row.appendChild($currency);
 		$row.appendChild($rate);
-    $row.classList.add('d-flex', 'overflow-auto')
-    $rate.classList.add('w-50');
-    $currency.classList.add('w-50');
+		$row.classList.add('d-flex', 'overflow-auto');
+		$rate.classList.add('w-50');
+		$currency.classList.add('w-50');
 	}
-	$loadingMask.classList.toggle('visually-hidden');
 	$tbody.querySelector('tr:first-child').classList.add('table-success');
 	$thead.querySelector('th:first-child').innerText = 'Currencies';
 	$thead.querySelector('th:last-child').innerText = 'Exchange Rate';
-	$tableContainer.classList.remove('visually-hidden');
+	
 };
 
 const handleFail = err => {
+	$errorPlaceholders.forEach($placeholder => {
+		$placeholder.classList.contains('d-none') &&
+			$placeholder.classList.remove('d-none');
+		$placeholder.innerText = err;
+	});
+};
+
+// FORM VALIDATION FROM BOOTSTRAP //
+
+(function () {
+	'use strict';
+
+	// Fetch all the forms we want to apply custom Bootstrap validation styles to
+	var forms = document.querySelectorAll('.needs-validation');
+
+	// Loop over them and prevent submission
+	Array.prototype.slice.call(forms).forEach(function (form) {
+		form.addEventListener(
+			'submit',
+			function (event) {
+				if (!form.checkValidity()) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+
+				form.classList.add('was-validated');
+			},
+			false
+		);
+	});
+})();
+
+// ON LOAD //
+
+fetchData(`${API_URL}/${KEY}/latest/USD`, loadAvailableCurrencies);
+
+// SUBMITS //
+
+$exchangeRatesForm.onsubmit = e => {
+  $errorPlaceholders.forEach($placeholder => {
+		$placeholder.classList.add('d-none');
+	});
+	e.preventDefault();
 	$loadingMask.classList.toggle('visually-hidden');
-	$errorMessage.classList.contains('d-none') &&
-		$errorMessage.classList.remove('d-none');
-	$errorMessage.innerText = `An error ocurred with the server: "${err.message}"`;
+	$tbody.replaceChildren();
+	const base = $exchangeRatesForm['rates-base'].value;
+	const URL = `${API_URL}/${KEY}/latest/${base}`;
+	fetchData(URL, displayExchangeRatesTable);
+	$loadingMask.classList.toggle('visually-hidden');
+};
+
+$pairConversionForm.onsubmit = e => {
+  $errorPlaceholders.forEach($placeholder => {
+		$placeholder.classList.add('d-none');
+	});
+	e.preventDefault();
+	$loadingMask.classList.toggle('visually-hidden');
+	
+	const base = $pairConversionForm['base'].value;
+	const target = $pairConversionForm['target'].value;
+	const amount = $pairConversionForm['amount'].value;
+	const URL = `${API_URL}/${KEY}/pair/${base}/${target}/${amount}`;
+	amount && fetchData(URL, displayConversion);
+	$loadingMask.classList.toggle('visually-hidden');
 };
