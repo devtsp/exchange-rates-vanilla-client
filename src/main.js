@@ -12,7 +12,6 @@ const $tbody = get('#table tbody');
 
 const $errorPlaceholders = document.querySelectorAll('.error');
 const $loadingMask = get('#loading-mask');
-
 const $pairConversionForm = get('#pair-conversion form');
 const $pairConversionResult = get('#pair-conversion p');
 
@@ -34,6 +33,7 @@ const displayConversion = data => {
 	$pairConversionResult.children[2].innerText = ` ${data.conversion_result} ${data.target_code}`;
 	$pairConversionResult.classList.contains('visually-hidden') &&
 		$pairConversionResult.classList.remove('visually-hidden');
+  $loadingMask.classList.add('visually-hidden');
 };
 
 const loadAvailableCurrencies = data => {
@@ -66,13 +66,14 @@ const displayExchangeRatesTable = data => {
 		$tbody.append($row);
 		$row.append($currency);
 		$row.append($rate);
-		$row.classList.add('d-flex', 'overflow-auto');
+		$row.classList.add('d-flex');
 		$rate.classList.add('w-50');
 		$currency.classList.add('w-50');
 	}
 	get('#table tbody tr:first-child').classList.add('table-success');
 	get('#table thead th:first-child').innerText = 'Currencies';
 	get('#table thead th:last-child').innerText = 'Exchange Rate';
+  $loadingMask.classList.add('visually-hidden');
 };
 
 const handleFail = err => {
@@ -104,29 +105,26 @@ const handleFail = err => {
 fetchData(`${API_URL}/${KEY}/codes`, loadAvailableCurrencies);
 
 $exchangeRatesForm.onsubmit = e => {
+  $loadingMask.classList.remove('visually-hidden');
 	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.add('d-none');
 	});
 	e.preventDefault();
-	$loadingMask.classList.toggle('visually-hidden');
 	$tbody.replaceChildren();
 	const base = $exchangeRatesForm['rates-base'].value;
 	const URL = `${API_URL}/${KEY}/latest/${base}`;
 	fetchData(URL, displayExchangeRatesTable);
-	$loadingMask.classList.toggle('visually-hidden');
 };
 
 $pairConversionForm.onsubmit = e => {
+  $loadingMask.classList.remove('visually-hidden');
 	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.add('d-none');
 	});
 	e.preventDefault();
-	$loadingMask.classList.toggle('visually-hidden');
-
 	const base = $pairConversionForm['base'].value;
 	const target = $pairConversionForm['target'].value;
 	const amount = $pairConversionForm['amount'].value;
 	const URL = `${API_URL}/${KEY}/pair/${base}/${target}/${amount}`;
 	amount && fetchData(URL, displayConversion);
-	$loadingMask.classList.toggle('visually-hidden');
 };
