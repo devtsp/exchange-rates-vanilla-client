@@ -37,14 +37,21 @@ const displayConversion = data => {
 };
 
 const loadAvailableCurrencies = data => {
-	for (let currency in data.conversion_rates) {
-		const $option = document.createElement('option');
-		$option.innerText = currency;
-		$option.value = currency;
-		$exchangeRatesForm['rates-base'].appendChild($option.cloneNode(true));
-		$pairConversionForm['base'].appendChild($option.cloneNode(true));
-		$pairConversionForm['target'].appendChild($option);
+  const currencies = [...data.supported_codes]
+  for (let currency of currencies) {
+		const $option = new Option();
+    const $abbr = document.createElement('strong')
+    const $long = document.createElement('span')
+		$abbr.innerText = currency[0];
+		$long.innerText = ` (${currency[1]})`;
+		$option.append($abbr);
+		$option.append($long);
+		$option.value = currency[0];
+	  $exchangeRatesForm['rates-base'].appendChild($option.cloneNode(true));
+	  $pairConversionForm['base'].appendChild($option.cloneNode(true));
+	  $pairConversionForm['target'].appendChild($option);
 	}
+  
 };
 
 const displayExchangeRatesTable = data => {
@@ -57,16 +64,16 @@ const displayExchangeRatesTable = data => {
 		const $rate = document.createElement('td');
 		$currency.innerText = currency;
 		$rate.innerText = data.conversion_rates[currency];
-		$tbody.appendChild($row);
-		$row.appendChild($currency);
-		$row.appendChild($rate);
+		$tbody.append($row);
+		$row.append($currency);
+		$row.append($rate);
 		$row.classList.add('d-flex', 'overflow-auto');
 		$rate.classList.add('w-50');
 		$currency.classList.add('w-50');
 	}
-	$tbody.querySelector('tr:first-child').classList.add('table-success');
-	$thead.querySelector('th:first-child').innerText = 'Currencies';
-	$thead.querySelector('th:last-child').innerText = 'Exchange Rate';
+	get('#table tbody tr:first-child').classList.add('table-success');
+	get('#table thead th:first-child').innerText = 'Currencies';
+	get('#table thead th:last-child').innerText = 'Exchange Rate';
 	
 };
 
@@ -74,7 +81,7 @@ const handleFail = err => {
 	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.contains('d-none') &&
 			$placeholder.classList.remove('d-none');
-		$placeholder.innerText = 'Ups! something went wrong with the server. Try again later';
+		$placeholder.innerText = 'Ups! something went wrong. Please try again later';
 	});
 };
 
@@ -105,7 +112,8 @@ const handleFail = err => {
 
 // ON LOAD //
 
-fetchData(`${API_URL}/${KEY}/latest/USD`, loadAvailableCurrencies);
+fetchData(`${API_URL}/${KEY}/codes`, loadAvailableCurrencies);
+
 
 // SUBMITS //
 

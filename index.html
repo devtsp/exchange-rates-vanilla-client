@@ -50,7 +50,7 @@
 		<div id="header" class="container-fluid text-center">
 			<header>
 				<h6 class="m-0 py-4">
-					<a href="https://www.exchangerate-api.com/" target="_blank"
+					<a href="https://www.exchgerate-api.com/" target="_blank"
 						>exchangerate-api.com</a
 					>
 				</h6>
@@ -59,7 +59,7 @@
 		<!-- MAIN  -->
 		<div
 			id="app"
-			class="container py-2 px-5 d-flex flex-column flex-fill overflow-auto"
+			class="container py-2 px-sm-5 d-flex flex-column flex-fill overflow-auto"
 		>
 			<!-- NAV TABS -->
 			<nav>
@@ -96,7 +96,7 @@
 			</nav>
 			<!-- TAB CONTENTS ALL -->
 			<div
-				class="tab-content border border-top-0 d-flex flex-fill flex-column overflow-auto bg-white"
+				class="tab-content border border-top-0 d-flex flex-fill flex-column overflow-auto bg-white  position-relative"
 				id="tab-content-all"
 			>
 				<!-- EXCHANGE RATES -->
@@ -107,7 +107,7 @@
 					id="exchange-rates"
 				>
 					<div class="container p-3">
-						<form class="px-3 py-3 position-sticky top-0 bg-white">
+						<form class="px-3 py-4 bg-white">
 							<label class="form-label" for="rates-base">
 								Select base currency
 							</label>
@@ -126,7 +126,7 @@
 						class="container d-flex flex-column align-items-stretch overflow-auto d-none"
 					>
 						<table
-							class="table table-sm table-hover d-flex flex-column align-items-stretch overflow-auto"
+							class="table table-sm table-hover d-flex flex-column align-items-stretch px-5 overflow-auto"
 						>
 							<thead>
 								<tr class="d-flex">
@@ -149,16 +149,17 @@
 					aria-labelledby="exchange-rates-tab"
 					role="tabpanel"
 				>
-					<div class="container pt-3">
-						<form class="px-3 py-3 needs-validation" novalidate>
+					<div class="container">
+						<form class="px-3 py-4 needs-validation" novalidate>
 							<div class="row mb-3">
-								<div class="col-6 mb-2">
+								<div class="col-6">
 									<label for="amount" class="form-label">Amount</label>
 									<input
 										name="amount"
 										id="amount"
 										type="number"
-										min="0.1"
+										min="0"
+                    step="any"
 										class="form-control form-control-sm w-100 position-relative"
 										required
 									/>
@@ -196,7 +197,7 @@
 					</div>
 					<div class="container-fluid py-4 px-5 w-auto">
 						<p
-							class="p-4 border-3 border-start border-info rounded rounded-3 bg-light visually-hidden"
+							class="p-4 border-3 border-start border-success rounded rounded-3 bg-light visually-hidden"
 						>
 							<span class="text-black-50 fs-3"></span><br />
 							<span class="text-black fs-1"></span>
