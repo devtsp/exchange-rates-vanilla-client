@@ -32,30 +32,29 @@ const fetchData = (URL, callback) => {
 const displayConversion = data => {
 	$pairConversionResult.children[0].innerText = `${$pairConversionForm['amount'].value} ${data.base_code} = `;
 	$pairConversionResult.children[2].innerText = ` ${data.conversion_result} ${data.target_code}`;
-  $pairConversionResult.classList.contains('visually-hidden') &&
+	$pairConversionResult.classList.contains('visually-hidden') &&
 		$pairConversionResult.classList.remove('visually-hidden');
 };
 
 const loadAvailableCurrencies = data => {
-  const currencies = [...data.supported_codes]
-  for (let currency of currencies) {
+	const currencies = [...data.supported_codes];
+	for (let currency of currencies) {
 		const $option = new Option();
-    const $abbr = document.createElement('strong')
-    const $long = document.createElement('span')
-		$abbr.innerText = currency[0];
-		$long.innerText = ` (${currency[1]})`;
-		$option.append($abbr);
-		$option.append($long);
+		const $currency = document.createElement('span');
+		$currency.innerText = `${currency[0]} (${currency[1]})`;
+		$option.append($currency);
 		$option.value = currency[0];
-	  $exchangeRatesForm['rates-base'].appendChild($option.cloneNode(true));
-	  $pairConversionForm['base'].appendChild($option.cloneNode(true));
-	  $pairConversionForm['target'].appendChild($option);
+		$exchangeRatesForm['rates-base'].appendChild($option.cloneNode(true));
+		$pairConversionForm['base'].appendChild($option.cloneNode(true));
+		$pairConversionForm['target'].appendChild($option);
 	}
-  
+	$exchangeRatesForm.querySelector('[value=USD]').defaultSelected = true;
+	get('#conversion-base [value=USD]').defaultSelected = true;
+	get('#target [value=ARS]').defaultSelected = true;
 };
 
 const displayExchangeRatesTable = data => {
-  $table.classList.remove('d-none')
+	$table.classList.remove('d-none');
 	const currencies = data.conversion_rates;
 	for (let currency in currencies) {
 		const $row = document.createElement('tr');
@@ -74,35 +73,27 @@ const displayExchangeRatesTable = data => {
 	get('#table tbody tr:first-child').classList.add('table-success');
 	get('#table thead th:first-child').innerText = 'Currencies';
 	get('#table thead th:last-child').innerText = 'Exchange Rate';
-	
 };
 
 const handleFail = err => {
 	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.contains('d-none') &&
 			$placeholder.classList.remove('d-none');
-		$placeholder.innerText = 'Ups! something went wrong. Please try again later';
+		$placeholder.innerText =
+			'Ups! something went wrong. Please try again later';
 	});
 };
 
-// FORM VALIDATION FROM BOOTSTRAP //
-
-(function () {
-	'use strict';
-
-	// Fetch all the forms we want to apply custom Bootstrap validation styles to
-	var forms = document.querySelectorAll('.needs-validation');
-
-	// Loop over them and prevent submission
-	Array.prototype.slice.call(forms).forEach(function (form) {
+(() => {
+	const forms = document.querySelectorAll('.needs-validation');
+	Array.prototype.slice.call(forms).forEach(form => {
 		form.addEventListener(
 			'submit',
-			function (event) {
+			event => {
 				if (!form.checkValidity()) {
 					event.preventDefault();
 					event.stopPropagation();
 				}
-
 				form.classList.add('was-validated');
 			},
 			false
@@ -110,15 +101,10 @@ const handleFail = err => {
 	});
 })();
 
-// ON LOAD //
-
 fetchData(`${API_URL}/${KEY}/codes`, loadAvailableCurrencies);
 
-
-// SUBMITS //
-
 $exchangeRatesForm.onsubmit = e => {
-  $errorPlaceholders.forEach($placeholder => {
+	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.add('d-none');
 	});
 	e.preventDefault();
@@ -131,12 +117,12 @@ $exchangeRatesForm.onsubmit = e => {
 };
 
 $pairConversionForm.onsubmit = e => {
-  $errorPlaceholders.forEach($placeholder => {
+	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.add('d-none');
 	});
 	e.preventDefault();
 	$loadingMask.classList.toggle('visually-hidden');
-	
+
 	const base = $pairConversionForm['base'].value;
 	const target = $pairConversionForm['target'].value;
 	const amount = $pairConversionForm['amount'].value;
