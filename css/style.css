@@ -1,5 +1,6 @@
 body {	
   height: 100vh;
+  background-image: linear-gradient(to top, rgba(145, 149, 177, 0.74), transparent  20%);
 }
 
 #app {
@@ -14,7 +15,11 @@ body {
 #base-selection-form {
   z-index: 1999;
 }
+#header {
+  color :black;
+}
 
-.headerColor {
-  background-color: rgb(18, 27, 70);
+#header a{
+  color :black;
+  font-weight: 400;
 }

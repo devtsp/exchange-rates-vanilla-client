@@ -32,8 +32,6 @@
 		<link rel="stylesheet" href="./css/style.css" />
 		<title>Exchange Rates</title>
 	</head>
-
-	<!-- BODY -->
 	<body class="d-flex flex-column m-auto">
 		<!-- LOADING -->
 		<div
@@ -48,32 +46,27 @@
 			<br />
 			<span class="d-block">Loading...</span>
 		</div>
-
 		<!-- HEADER -->
-		<div id="header" class="container-fluid headerColor text-center">
+		<div id="header" class="container-fluid text-center">
 			<header>
 				<h6 class="m-0 py-4">
-					<a
-            class="text-white"
-						href="https://www.exchangerate-api.com/"
-						target="_blank"
-						>exhangerate-api.com</a
+					<a href="https://www.exchangerate-api.com/" target="_blank"
+						>exchangerate-api.com</a
 					>
 				</h6>
 			</header>
 		</div>
-
-		<!-- MAIN SECTION ==================================================================-->
+		<!-- MAIN  -->
 		<div
 			id="app"
-			class="container py-4 d-flex flex-column flex-fill overflow-auto"
+			class="container py-2 px-5 d-flex flex-column flex-fill overflow-auto"
 		>
 			<!-- NAV TABS -->
 			<nav>
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item" role="presentation">
 						<button
-							class="nav-link active"
+							class="nav-link active link-secondary"
 							data-bs-toggle="tab"
 							data-bs-target="#exchange-rates"
 							type="button"
@@ -87,7 +80,7 @@
 					</li>
 					<li class="nav-item" role="presentation">
 						<button
-							class="nav-link"
+							class="nav-link link-secondary"
 							data-bs-toggle="tab"
 							data-bs-target="#pair-conversion"
 							type="button"
@@ -101,47 +94,33 @@
 					</li>
 				</ul>
 			</nav>
-
 			<!-- TAB CONTENTS ALL -->
 			<div
-				class="tab-content border border-top-0 d-flex flex-fill flex-column overflow-auto"
+				class="tab-content border border-top-0 d-flex flex-fill flex-column overflow-auto bg-white"
 				id="tab-content-all"
 			>
-				<!-- TAB PANE EXCHANGE RATES =============================-->
+				<!-- EXCHANGE RATES -->
 				<div
 					class="tab-pane fade show active flex-fill overflow-auto"
 					aria-labelledby="global-exchange-rates-tab"
 					role="tabpanel"
 					id="exchange-rates"
 				>
-					<!-- EXCHANGE RATES FORM -->
-
-					<div class="container p-3 position-relative">
+					<div class="container p-3">
 						<form class="px-3 py-3 position-sticky top-0 bg-white">
-							<div class="row">
-								<div class="col">
-									<label class="form-label" for="rates-base">
-										Select base currency
-									</label>
-									<select
-										id="rates-base"
-										name="rates-base"
-										class="form-select form-select-sm w-100 me-3"
-									></select>
-								</div>
-								<div class="col position-relative">
-									<button
-										class="btn btn-outline-success btn-sm px-2 position-absolute bottom-0 left-0"
-									>
-										Search
-									</button>
-								</div>
-							</div>
+							<label class="form-label" for="rates-base">
+								Select base currency
+							</label>
+							<select
+								id="rates-base"
+								name="rates-base"
+								class="form-select form-select-sm w-50 me-3"
+							></select>
+							<button class="btn btn-outline-success btn-sm px-2 my-3">
+								Get Rates
+							</button>
 						</form>
 					</div>
-
-					<!-- EXCHANGE RATES RESULTS -->
-
 					<div
 						id="table"
 						class="container d-flex flex-column align-items-stretch overflow-auto d-none"
@@ -158,71 +137,63 @@
 							<tbody class="overflow-auto"></tbody>
 						</table>
 					</div>
-
-					<!-- ERROR -->
 					<div
 						class="error alert alert-danger mx-4 text-center d-none"
 						role="alert"
 					></div>
 				</div>
-
-				<!-- TAB-PANE CONVERSION ======================================-->
+				<!-- CONVERSION -->
 				<div
 					id="pair-conversion"
 					class="tab-pane fade"
 					aria-labelledby="exchange-rates-tab"
 					role="tabpanel"
 				>
-					<!-- CONVERSION FORM -->
 					<div class="container pt-3">
 						<form class="px-3 py-3 needs-validation" novalidate>
-              <div class=" mb-3">
-                <label for="amount" class="form-label">Amount to convert</label>
-                <input
-                  name="amount"
-                  id="amount"
-                  type="number"
-                  class="form-control form-control-sm w-50"
-                  required
-                />
-                <div class="invalid-feedback">
-                  Please select an amount to convert.
+							<div class="row mb-3">
+								<div class="col-6 mb-2">
+									<label for="amount" class="form-label">Amount</label>
+									<input
+										name="amount"
+										id="amount"
+										type="number"
+										min="0.1"
+										class="form-control form-control-sm w-100 position-relative"
+										required
+									/>
+									<div class="invalid-feedback">
+										Please select an amount to convert.
+									</div>
+								</div>
+								<div class="row">
+                  <div class="col">
+                    <label for="conversion-base" class="form-label">From</label>
+                    <select
+                      name="base"
+                      class="form-select form-select-sm w-100"
+                      aria-label="Select Base Currency"
+                      id="conversion-base"
+                    ></select>
+                  </div>
+                  <div class="col">
+                    <label for="target" class="form-label">To:</label>
+                    <select
+                      name="target"
+                      class="form-select form-select-sm w-100"
+                      aria-label="Select Target Currency"
+                      id="target"
+                    ></select>
+                  </div>
                 </div>
-              </div>
-							<div class="row">
-								<div class="col">
-									<label for="conversion-base" class="form-label"
-										>Base currency</label
-									>
-									<select
-										name="base"
-										class="form-select form-select-sm w-100"
-										aria-label="Select Base Currency"
-										id="conversion-base"
-									></select>
-								</div>
-								<div class="col">
-									<label for="target" class="form-label">Target currency</label>
-									<select
-										name="target"
-										class="form-select form-select-sm w-100"
-										aria-label="Select Target Currency"
-										id="target"
-									></select>
-								</div>
-								<div class="col position-relative">
-									<button
-										type="submit"
-										class="btn btn-outline-success btn-sm px-2 align-text-bottom position-absolute bottom-0 left-0"
-									>
-										Convert
-									</button>
-								</div>
+							</div>
+							<div>
+								<button class="btn btn-outline-success btn-sm px-2">
+									Convert
+								</button>
 							</div>
 						</form>
 					</div>
-
-					<!-- CONVERSION RESULTS -->
 					<div class="container-fluid py-4 px-5 w-auto">
 						<p
 							class="p-4 border-3 border-start border-info rounded rounded-3 bg-light visually-hidden"
@@ -231,8 +202,6 @@
 							<span class="text-black fs-1"></span>
 						</p>
 					</div>
-
-					<!-- ERROR -->
 					<div
 						class="error alert alert-danger mx-4 text-center d-none"
 						role="alert"
@@ -240,8 +209,7 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- FOOTER ===========================================================================-->
+		<!-- FOOTER -->
 		<div class="container-fluid px-4">
 			<footer>
 				<div class="d-flex pb-3 align-items-center justify-content-center">

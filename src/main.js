@@ -30,7 +30,7 @@ const fetchData = (URL, callback) => {
 };
 
 const displayConversion = data => {
-	$pairConversionResult.children[0].innerText = `${$pairConversionForm['amount'].value} ${data.base_code} equals: `;
+	$pairConversionResult.children[0].innerText = `${$pairConversionForm['amount'].value} ${data.base_code} = `;
 	$pairConversionResult.children[2].innerText = ` ${data.conversion_result} ${data.target_code}`;
   $pairConversionResult.classList.contains('visually-hidden') &&
 		$pairConversionResult.classList.remove('visually-hidden');
@@ -74,7 +74,7 @@ const handleFail = err => {
 	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.contains('d-none') &&
 			$placeholder.classList.remove('d-none');
-		$placeholder.innerText = err;
+		$placeholder.innerText = 'Ups! something went wrong with the server. Try again later';
 	});
 };
 
