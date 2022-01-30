@@ -36,7 +36,7 @@ const displayConversion = data => {
 	$loadingMask.classList.add('visually-hidden');
 };
 
-const loadAvailableCurrencies = data => {
+const handleCodes = data => {
 	localStorage.getItem('supportedCodes') ||
 		localStorage.setItem('supportedCodes', JSON.stringify(data));
 	const currencies = [...data.supported_codes];
@@ -107,9 +107,9 @@ const handleFail = err => {
 const getCodes = () => {
 	const stored = localStorage.getItem('supportedCodes');
 	if (!stored) {
-		fetchData(`${API_URL}/${KEY}/codes`, loadAvailableCurrencies);
+		fetchData(`${API_URL}/${KEY}/codes`, handleCodes);
 	} else {
-		loadAvailableCurrencies(JSON.parse(stored));
+		handleCodes(JSON.parse(stored));
 	}
 };
 
@@ -128,7 +128,6 @@ $exchangeRatesForm.onsubmit = e => {
 };
 
 $pairConversionForm.onsubmit = e => {
-	$loadingMask.classList.remove('visually-hidden');
 	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.add('d-none');
 	});
@@ -138,5 +137,8 @@ $pairConversionForm.onsubmit = e => {
 	const amount = $pairConversionForm['amount'].value;
 	const URL = `${API_URL}/${KEY}/pair/${base}/${target}/${amount}`;
 	console.log(URL);
-	amount && fetchData(URL, displayConversion);
+	if (amount) {
+		$loadingMask.classList.remove('visually-hidden');
+		fetchData(URL, displayConversion);
+	}
 };
