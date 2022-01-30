@@ -1,0 +1,24 @@
+{
+	"name": "exchange-rates-api-interface",
+	"version": "1.0.0",
+	"description": "# [Launch App](https://devtsp.github.io/exchange-rates-api-interface/)",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"cy:open": "npm run cypress open"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/devtsp/exchange-rates-api-interface.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/devtsp/exchange-rates-api-interface/issues"
+	},
+	"homepage": "https://github.com/devtsp/exchange-rates-api-interface#readme",
+	"devDependencies": {
+		"cypress": "^9.3.1"
+	}
+}
