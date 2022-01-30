@@ -79,6 +79,7 @@ const displayExchangeRatesTable = data => {
 };
 
 const handleFail = err => {
+  $loadingMask.classList.add('visually-hidden');
 	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.contains('d-none') &&
 			$placeholder.classList.remove('d-none');

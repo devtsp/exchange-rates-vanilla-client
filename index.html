@@ -73,6 +73,7 @@
 							role="tab"
 							aria-controls="exchange-rates"
 							aria-selected="true"
+							data-cy="link-to-rates-panel"
 						>
 							<span class="d-inline d-sm-none">Exchange Rates</span>
 							<span class="d-none d-sm-inline">Global Exchange Rates</span>
@@ -87,6 +88,7 @@
 							role="tab"
 							aria-controls="pair-conversion"
 							aria-selected="false"
+							data-cy="link-to-conversion-panel"
 						>
 							<span class="d-inline d-sm-none">Conversion</span>
 							<span class="d-none d-sm-inline">Pair Conversion</span>
@@ -116,7 +118,10 @@
 								name="rates-base"
 								class="form-select form-select-sm w-50 me-3"
 							></select>
-							<button class="btn btn-outline-success btn-sm px-2 my-3">
+							<button
+								class="btn btn-outline-success btn-sm px-2 my-3"
+								data-cy="rates-submit"
+							>
 								Get Rates
 							</button>
 						</form>
@@ -127,6 +132,7 @@
 					>
 						<table
 							class="table table-sm table-hover d-flex flex-column align-items-stretch px-5 overflow-auto"
+							data-cy="fetched-rates-table"
 						>
 							<thead>
 								<tr class="d-flex">

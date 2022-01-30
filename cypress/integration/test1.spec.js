@@ -17,3 +17,24 @@ describe('Initial DOM setup', () => {
 		});
 	});
 });
+
+describe('Exchange rates section interaction', () => {
+	it('Display rates table on submit', () => {
+		cy.intercept('**/latest/**', req => {
+			req.reply({ fixture: 'usd-rates' });
+		});
+		cy.get('[data-cy=rates-submit]')
+			.click()
+			.then($submit => {
+				cy.get('[data-cy=fetched-rates-table]').should('be.visible');
+			});
+	});
+});
+
+describe('Links', () => {
+	it('Correctly change visible content when changing tab', () => {
+		cy.get('[data-cy=link-to-conversion-panel]').then($tabLink => {
+			cy.log($tabLink);
+		});
+	});
+});
