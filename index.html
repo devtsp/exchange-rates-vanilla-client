@@ -50,7 +50,9 @@
 		<div id="header" class="container-fluid text-center">
 			<header>
 				<h6 class="m-0 py-4">
-					<a href="https://www.exchangerate-api.com/" target="_blank"
+					<a
+						href="https://www.exchangerate-api.com/"
+						data-cy="official-api-link"
 						>exchangerate-api.com</a
 					>
 				</h6>
@@ -144,6 +146,7 @@
 					<div
 						class="error alert alert-danger mx-4 text-center d-none"
 						role="alert"
+						data-cy="rates-error"
 					></div>
 				</div>
 				<!-- CONVERSION -->
@@ -219,8 +222,8 @@
 					</div>
 					<div
 						class="error alert alert-danger mx-4 text-center d-none"
-						data-cy="conversion-error"
 						role="alert"
+						data-cy="conversion-error"
 					></div>
 				</div>
 			</div>
@@ -231,8 +234,8 @@
 				<div class="d-flex pb-3 align-items-center justify-content-center">
 					<a
 						href="https://github.com/devtsp/exchange-rates-api-interface"
-						target="_blank"
 						class="d-flex align-items-center justify-content-center text-decoration-none text-black"
+						data-cy="source-code-link"
 					>
 						<i class="bi bi-github fs-4" aria-label="Github"></i>
 						<span class="ps-3">Source Code</span>

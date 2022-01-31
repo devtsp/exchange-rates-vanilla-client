@@ -15,7 +15,7 @@ const $loadingMask = get('#loading-mask');
 const $pairConversionForm = get('#pair-conversion form');
 const $pairConversionResult = get('#pair-conversion p');
 
-const fetchData = (URL, callback = v => v) => {
+const fetchData = (URL, callback) => {
 	fetch(URL)
 		.then(resp => resp.json())
 		.then(resp => {
@@ -31,8 +31,7 @@ const fetchData = (URL, callback = v => v) => {
 const displayConversion = data => {
 	$pairConversionResult.children[0].innerText = `${$pairConversionForm['amount'].value} ${data.base_code} = `;
 	$pairConversionResult.children[2].innerText = ` ${data.conversion_result} ${data.target_code}`;
-	$pairConversionResult.classList.contains('visually-hidden') &&
-		$pairConversionResult.classList.remove('visually-hidden');
+	$pairConversionResult.classList.remove('visually-hidden');
 	$loadingMask.classList.add('visually-hidden');
 };
 
@@ -56,7 +55,6 @@ const handleCodes = data => {
 };
 
 const displayExchangeRatesTable = data => {
-	$table.classList.remove('d-none');
 	const currencies = data.conversion_rates;
 	for (let currency in currencies) {
 		const $row = document.createElement('tr');
@@ -76,10 +74,11 @@ const displayExchangeRatesTable = data => {
 	get('#table thead th:first-child').innerText = 'Currencies';
 	get('#table thead th:last-child').innerText = 'Exchange Rate';
 	$loadingMask.classList.add('visually-hidden');
+	$table.classList.remove('visually-hidden');
 };
 
 const handleFail = err => {
-  $loadingMask.classList.add('visually-hidden');
+	$loadingMask.classList.add('visually-hidden');
 	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.contains('d-none') &&
 			$placeholder.classList.remove('d-none');
@@ -118,6 +117,7 @@ getCodes();
 
 $exchangeRatesForm.onsubmit = e => {
 	$loadingMask.classList.remove('visually-hidden');
+	$table.classList.add('visually-hidden');
 	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.add('d-none');
 	});
@@ -129,6 +129,7 @@ $exchangeRatesForm.onsubmit = e => {
 };
 
 $pairConversionForm.onsubmit = e => {
+	$pairConversionResult.classList.add('visually-hidden');
 	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.add('d-none');
 	});
