@@ -22,19 +22,34 @@ describe('Exchange rates section interaction', () => {
 	it('Display rates table on submit', () => {
 		cy.intercept('**/latest/**', req => {
 			req.reply({ fixture: 'usd-rates' });
-		});
-		cy.get('[data-cy=rates-submit]')
-			.click()
-			.then($submit => {
-				cy.get('[data-cy=fetched-rates-table]').should('be.visible');
-			});
+		}).as('latestRates');
+		cy.get('[data-cy=fetched-rates-table]').should('not.be.visible');
+		cy.get('[data-cy=rates-form]').submit();
+		cy.get('[data-cy=fetched-rates-table]').should('be.visible');
 	});
 });
 
 describe('Links', () => {
 	it('Correctly change visible content when changing tab', () => {
-		cy.get('[data-cy=link-to-conversion-panel]').then($tabLink => {
-			cy.log($tabLink);
-		});
+		cy.get('[data-cy=conversion-panel]')
+			.should('not.be.visible')
+			.then($conversionPanel => {
+				cy.get('[data-cy=link-to-conversion-panel]').click();
+				cy.wrap($conversionPanel).should('be.visible');
+			});
+		cy.get('[data-cy=rates-panel]').should('not.be.visible');
+	});
+});
+
+describe('Pair conversion section interaction', () => {
+	it('Display conversion card on submit after filling amount', () => {
+		cy.intercept('**/pair/**', req => {
+			req.reply({ fixture: 'pair-conversion.json' });
+		}).as('pairConversion');
+		cy.get('[data-cy=conversion-result]').as('result');
+		cy.get('[data-cy=conversion-amount]').type('123');
+		cy.get('[data-cy=conversion-form]').submit();
+		cy.get('@result').should('be.visible');
+		cy.get('[data-cy=conversion-error]').should('not.be.visible');
 	});
 });
