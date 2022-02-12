@@ -1,7 +1,30 @@
+body {
+	height: 100vh;
+	width: 100vw;
+	background-image: linear-gradient(
+		to top,
+		rgba(145, 149, 177, 0.74),
+		transparent 40%
+	);
+  background-repeat: no-repeat;
+}
+
+@media all and (max-width: 360px) {
+  :root {
+    font-size: 14px;
+  }
+}
+
+#app {
+	min-width: 300px;
+	max-width: 576px;
+}
 
 #loading-mask {
-  z-index: 2000;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.171);
+	z-index: 2000;
+}
+
+#header a {
+	color: rgba(93, 101, 153, 0.74);
+	font-weight: 400;
 }
