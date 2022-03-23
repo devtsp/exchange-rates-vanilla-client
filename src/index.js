@@ -1,32 +1,12 @@
-const API_URL = 'https://v6.exchangerate-api.com/v6';
-const KEY = 'ec7eec5e7967904472b9cf30';
-
-const get = selector => {
-	return document.querySelector(selector);
-};
-
-const $exchangeRatesForm = get('#exchange-rates form');
-const $table = get('#table');
-const $thead = get('#table thead');
-const $tbody = get('#table tbody');
+const $exchangeRatesForm = document.querySelector('#exchange-rates form');
+const $table = document.querySelector('#table');
+const $thead = document.querySelector('#table thead');
+const $tbody = document.querySelector('#table tbody');
 
 const $errorPlaceholders = document.querySelectorAll('.error');
-const $loadingMask = get('#loading-mask');
-const $pairConversionForm = get('#pair-conversion form');
-const $pairConversionResult = get('#pair-conversion p');
-
-const fetchData = (URL, callback) => {
-	fetch(URL)
-		.then(resp => resp.json())
-		.then(resp => {
-			if (resp.result == 'success') {
-				callback(resp);
-			} else {
-				handleFail(resp);
-			}
-		})
-		.catch(err => handleFail(err));
-};
+const $loadingMask = document.querySelector('#loading-mask');
+const $pairConversionForm = document.querySelector('#pair-conversion form');
+const $pairConversionResult = document.querySelector('#pair-conversion p');
 
 const displayConversion = data => {
 	$pairConversionResult.children[0].innerText = `${$pairConversionForm['amount'].value} ${data.base_code} = `;
@@ -50,12 +30,13 @@ const handleCodes = data => {
 		$pairConversionForm['target'].appendChild($option);
 	}
 	$exchangeRatesForm.querySelector('[value=USD]').defaultSelected = true;
-	get('#conversion-base [value=USD]').defaultSelected = true;
-	get('#target [value=ARS]').defaultSelected = true;
+	document.querySelector('#conversion-base [value=USD]').defaultSelected = true;
+	document.querySelector('#target [value=ARS]').defaultSelected = true;
 };
 
 const displayExchangeRatesTable = data => {
 	const currencies = data.conversion_rates;
+	console.log(currencies);
 	for (let currency in currencies) {
 		const $row = document.createElement('tr');
 		const $currency = document.createElement('th');
@@ -116,12 +97,12 @@ const getCodes = () => {
 getCodes();
 
 $exchangeRatesForm.onsubmit = e => {
+	e.preventDefault();
 	$loadingMask.classList.remove('visually-hidden');
 	$table.classList.add('visually-hidden');
 	$errorPlaceholders.forEach($placeholder => {
 		$placeholder.classList.add('d-none');
 	});
-	e.preventDefault();
 	$tbody.replaceChildren();
 	const base = $exchangeRatesForm['rates-base'].value;
 	const URL = `${API_URL}/${KEY}/latest/${base}`;
@@ -138,7 +119,6 @@ $pairConversionForm.onsubmit = e => {
 	const target = $pairConversionForm['target'].value;
 	const amount = $pairConversionForm['amount'].value;
 	const URL = `${API_URL}/${KEY}/pair/${base}/${target}/${amount}`;
-	console.log(URL);
 	if (amount) {
 		$loadingMask.classList.remove('visually-hidden');
 		fetchData(URL, displayConversion);
