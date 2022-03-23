@@ -5,6 +5,10 @@ export const fetchAvailableCurrencies = async () => {
 	return await fetchApi(API_URL + KEY + '/codes');
 };
 
+export const fetchCurrenciesExchangeRates = async baseCurrency => {
+	return await fetchApi(API_URL + KEY + '/latest/' + baseCurrency);
+};
+
 const fetchApi = async url => {
 	const response = await fetch(url);
 	if (!response.ok) {
