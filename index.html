@@ -118,7 +118,7 @@
 							</label>
 							<select
 								id="rates-base"
-								name="rates-base"
+								name="base"
 								class="form-select form-select-sm w-50 me-3"
 							></select>
 							<button class="btn btn-outline-success btn-sm px-2 my-3">
@@ -182,12 +182,14 @@
 								</div>
 								<div class="row">
 									<div class="col">
-										<label for="conversion-base" class="form-label">From</label>
+										<label for="conversion-origin" class="form-label"
+											>From</label
+										>
 										<select
-											name="base"
+											name="origin"
 											class="form-select form-select-sm w-100"
-											aria-label="Select Base Currency"
-											id="conversion-base"
+											aria-label="Select Origin Currency"
+											id="conversion-origin"
 										></select>
 									</div>
 									<div class="col">
@@ -244,6 +246,6 @@
 			</footer>
 		</div>
 
-		<script src="src/index.js"></script>
+		<script src="src/index.js" type="module"></script>
 	</body>
 </html>
