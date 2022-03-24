@@ -1,21 +1,31 @@
 export const renderAvailableCurrenciesOptionLists = supportedCodes => {
-	const $exchangeRatesForm = document.querySelector('#exchange-rates form');
-	const $pairConversionForm = document.querySelector('#pair-conversion form');
+	const $baseSelection = document.querySelector(
+		'#exchange-rates form [name=base]'
+	);
+	const $pairConversionOriginSelection = document.querySelector(
+		'#pair-conversion form [name=origin]'
+	);
+	const $pairConversionTargetSelection = document.querySelector(
+		'#pair-conversion form [name=target]'
+	);
 	for (let [tla, fullReference] of supportedCodes) {
 		const $currencyOption = new Option();
 		$currencyOption.value = tla;
 		const $currencyDescription = document.createElement('span');
-		$currencyDescription.innerText = `${tla} (${fullReference})`;
+		$currencyDescription.textContent = `${tla} (${fullReference})`;
 		$currencyOption.append($currencyDescription);
-		$exchangeRatesForm.base.appendChild($currencyOption.cloneNode(true));
-		$pairConversionForm.origin.appendChild($currencyOption.cloneNode(true));
-		$pairConversionForm.target.appendChild($currencyOption);
+		$baseSelection.appendChild($currencyOption.cloneNode(true));
+		$pairConversionOriginSelection.appendChild($currencyOption.cloneNode(true));
+		$pairConversionTargetSelection.appendChild($currencyOption);
 	}
-	$exchangeRatesForm.base.querySelector('[value=USD]').defaultSelected = true;
-	$pairConversionForm.origin.querySelector(
-		'[value=USD]'
-	).defaultSelected = true;
-	$pairConversionForm.target.querySelector(
-		'[value=ARS]'
-	).defaultSelected = true;
+	const $baseSelectionUSDOption = $baseSelection.querySelector('[value=USD]');
+	const $originSelectionUSDOption =
+		$pairConversionOriginSelection.querySelector('[value=USD]');
+	const $targetSelectionARSOption =
+		$pairConversionTargetSelection.querySelector('[value=ARS]');
+	$baseSelectionUSDOption && ($baseSelectionUSDOption.defaultSelected = true);
+	$originSelectionUSDOption &&
+		($originSelectionUSDOption.defaultSelected = true);
+	$targetSelectionARSOption &&
+		($targetSelectionARSOption.defaultSelected = true);
 };
