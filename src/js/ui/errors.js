@@ -1,10 +1,6 @@
 export const renderError = error => {
-	const message =
-		+error.message < 500
-			? `Error: ${error.message}`
-			: `Error: ${error.message}`;
 	document.querySelectorAll('.error').forEach(errorMessage => {
-		errorMessage.innerText = message;
+		errorMessage.innerText = error.message;
 		errorMessage.classList.remove('d-none');
 	});
 };
