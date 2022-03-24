@@ -29,7 +29,7 @@
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
 		/>
-		<link rel="stylesheet" href="./css/style.css" />
+		<link rel="stylesheet" href="src/css/style.css" />
 		<title>Exchange Rates</title>
 	</head>
 	<body class="d-flex flex-column m-auto">
@@ -112,39 +112,42 @@
 					data-cy="rates-panel"
 				>
 					<div class="container p-3">
-						<form class="px-3 py-4 bg-white" data-cy="rates-form">
-							<label class="form-label" for="rates-base">
+						<form
+							class="px-3 py-4 bg-white d-flex flex-column align-items-center"
+							data-cy="rates-form"
+						>
+							<label class="form-label mb-3" for="rates-base">
 								Select base currency
 							</label>
 							<select
 								id="rates-base"
-								name="rates-base"
-								class="form-select form-select-sm w-50 me-3"
+								name="base"
+								class="form-select form-select-sm m-0"
 							></select>
-							<button class="btn btn-outline-success btn-sm px-2 my-3">
+							<button class="btn btn-outline-success btn-sm px-3 my-3">
 								Get Rates
 							</button>
 						</form>
 					</div>
 					<div
-						id="table"
-						class="container d-flex flex-column align-items-stretch overflow-auto d-none"
+						id="exchange-rates-results"
+						class="container d-flex flex-column align-items-stretch overflow-auto"
 					>
 						<table
-							class="table table-sm table-hover d-flex flex-column align-items-stretch px-5 overflow-auto"
+							class="table table-sm table-hover d-flex flex-column align-items-stretch px-5 overflow-auto visually-hidden"
 							data-cy="fetched-rates-table"
 						>
 							<thead>
 								<tr class="d-flex">
-									<th scope="col" class="w-50"></th>
-									<th scope="col" class="w-50"></th>
+									<th scope="col" class="w-50">Name</th>
+									<th scope="col" class="w-50">Exchange Rate</th>
 								</tr>
 							</thead>
 							<tbody class="overflow-auto"></tbody>
 						</table>
 					</div>
 					<div
-						class="error alert alert-danger mx-4 text-center d-none"
+						class="error mx-4 alert alert-danger text-center d-none"
 						role="alert"
 						data-cy="rates-error"
 					></div>
@@ -159,61 +162,52 @@
 				>
 					<div class="container">
 						<form
-							class="px-3 py-4 needs-validation"
+							class="px-3 pt-4 needs-validation w-75 m-auto d-flex flex-column align-items-center"
 							data-cy="conversion-form"
 							novalidate
 						>
-							<div class="row mb-3">
-								<div class="col-6">
-									<label for="amount" class="form-label">Amount</label>
-									<input
-										name="amount"
-										id="amount"
-										type="number"
-										min="0"
-										step="any"
-										class="form-control form-control-sm w-100 position-relative"
-										data-cy="conversion-amount"
-										required
-									/>
-									<div class="invalid-feedback">
-										Please select an amount to convert.
-									</div>
-								</div>
-								<div class="row">
-									<div class="col">
-										<label for="conversion-base" class="form-label">From</label>
-										<select
-											name="base"
-											class="form-select form-select-sm w-100"
-											aria-label="Select Base Currency"
-											id="conversion-base"
-										></select>
-									</div>
-									<div class="col">
-										<label for="target" class="form-label">To:</label>
-										<select
-											name="target"
-											class="form-select form-select-sm w-100"
-											aria-label="Select Target Currency"
-											id="target"
-										></select>
-									</div>
-								</div>
+							<label for="amount" class="form-label">Amount:</label>
+							<input
+								name="amount"
+								id="amount"
+								type="number"
+								min="0"
+								step="any"
+								class="form-control form-control-sm mb-2 text-center"
+								data-cy="conversion-amount"
+								required
+							/>
+							<div class="invalid-feedback">
+								Please select an amount to convert.
 							</div>
-							<div>
-								<button
-									class="btn btn-outline-success btn-sm px-2"
-									cy-data="conversion-submit"
-								>
-									Convert
-								</button>
-							</div>
+							<label for="conversion-origin" class="form-label"
+								>Base Currency:</label
+							>
+							<select
+								name="origin"
+								class="form-select form-select-sm mb-2"
+								aria-label="Select Origin Currency"
+								id="conversion-origin"
+							></select>
+							<label for="target" class="form-label">Target Currency:</label>
+							<select
+								name="target"
+								class="form-select form-select-sm mb-2"
+								aria-label="Select Target Currency"
+								id="target"
+							></select>
+							<button
+								class="btn btn-outline-success btn-sm px-3 my-3"
+								cy-data="conversion-submit"
+							>
+								Convert
+							</button>
 						</form>
 					</div>
-					<div class="container-fluid py-4 px-5 w-auto">
+					<div class="container-fluid px-4 w-auto">
 						<p
-							class="p-4 border-3 border-start border-success rounded rounded-3 bg-light visually-hidden"
+							id="conversion-result"
+							class="px-4 py-2 border-3 border-start border-success rounded rounded-3 bg-light visually-hidden"
 							data-cy="conversion-result"
 						>
 							<span class="text-black-50 fs-3"></span><br />
@@ -244,6 +238,6 @@
 			</footer>
 		</div>
 
-		<script src="src/main.js"></script>
+		<script src="src/js/index.js" type="module"></script>
 	</body>
 </html>
