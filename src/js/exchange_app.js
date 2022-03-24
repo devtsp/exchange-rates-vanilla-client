@@ -5,8 +5,8 @@ import {
 	getCurrenciesExchangeRates,
 	getPairConversion,
 } from './services/exchange_service.js';
-import { renderAvailableCurrenciesOptionLists } from './js/ui/available_currencies.js.js';
-import { setBootstrapFormValidations } from './js/ui/form_validations.js.js';
+import { renderAvailableCurrenciesOptionLists } from './ui/available_currencies.js';
+import { setBootstrapFormValidations } from './ui/form_validations.js';
 import {
 	setExchangeRatesHandler,
 	setPairConversionHandler,

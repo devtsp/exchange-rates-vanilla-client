@@ -3,7 +3,6 @@ export const renderExchangeRatesTable = exchangeRates => {
 		.querySelector('#exchange-rates-results table')
 		.classList.remove('visually-hidden');
 	const $tbody = document.querySelector('#exchange-rates-results tbody');
-	$tbody.replaceChildren();
 	const currencyEntries = Object.entries(exchangeRates);
 	for (let [name, value] of currencyEntries) {
 		const $currencyName = document.createElement('th');

@@ -54,7 +54,10 @@ describe('Exchange rates section interaction', () => {
 		cy.intercept('**/latest/**', req => {
 			req.reply({ fixture: 'usd-rates' });
 		}).as('latestRates');
-		cy.get('[data-cy=fetched-rates-table]').should('not.be.visible');
+		cy.get('[data-cy=fetched-rates-table]').should(
+			'have.class',
+			'visually-hidden'
+		);
 		cy.get('[data-cy=rates-form]')
 			.submit()
 			.then($form => {
@@ -102,7 +105,7 @@ describe('Error messages', () => {
 		cy.get('[data-cy=rates-form]')
 			.submit()
 			.then($form => {
-				cy.get('[data-cy=rates-error]').should('be.visible');
+				cy.get('[data-cy=rates-error]').should('not.have.class', 'd-none');
 			});
 	});
 
