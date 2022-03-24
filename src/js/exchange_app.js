@@ -3,11 +3,16 @@ import { resetError, renderError } from './ui/errors.js';
 import {
 	getAvailableCurrencies,
 	getCurrenciesExchangeRates,
-} from './services/exchange_app.js';
-import { renderAvailableCurrenciesOptionLists } from './ui/available_currencies.js';
-import { setBootstrapFormValidations } from './ui/form_validations.js';
-import { setExchangeRatesHandler } from './ui/event_handlers.js';
+	getPairConversion,
+} from './services/exchange_service.js';
+import { renderAvailableCurrenciesOptionLists } from './js/ui/available_currencies.js.js';
+import { setBootstrapFormValidations } from './js/ui/form_validations.js.js';
+import {
+	setExchangeRatesHandler,
+	setPairConversionHandler,
+} from './ui/set_handlers.js';
 import { renderExchangeRatesTable } from './ui/exchange_rates.js';
+import { renderPairConversionCard } from './ui/pair_conversion.js';
 
 const showAvailableCurrencies = async () => {
 	resetError();
@@ -23,7 +28,6 @@ const showAvailableCurrencies = async () => {
 };
 
 const showExchangeRates = async baseCurrency => {
-	console.log(baseCurrency);
 	resetError();
 	toggleLoading();
 	try {
@@ -36,21 +40,23 @@ const showExchangeRates = async baseCurrency => {
 	}
 };
 
-// const showConversion = async (originCurrency, targetCurrency, amount) => {
-// 	resetError();
-// 	toggleLoading();
-// 	try {
-// 		const conversion = await fetchApi(baseCurrency);
-// 		renderRatesTable(rates);
-// 	} catch (error) {
-// 		renderError(error);
-// 	} finally {
-// 		toggleLoading();
-// 	}
-// };
+const showPairConversion = async (amount, originCurrency, targetCurrency) => {
+	resetError();
+	toggleLoading();
+	try {
+		const { base_code, target_code, conversion_result } =
+			await getPairConversion(amount, originCurrency, targetCurrency);
+		renderPairConversionCard({ base_code, target_code, conversion_result });
+	} catch (error) {
+		renderError(error);
+	} finally {
+		toggleLoading();
+	}
+};
 
 export const initExchangeApp = () => {
 	setBootstrapFormValidations();
 	showAvailableCurrencies();
 	setExchangeRatesHandler(showExchangeRates);
+	setPairConversionHandler(showPairConversion);
 };

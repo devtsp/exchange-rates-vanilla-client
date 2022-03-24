@@ -6,13 +6,13 @@ body {
 		rgba(145, 149, 177, 0.74),
 		transparent 40%
 	);
-  background-repeat: no-repeat;
+	background-repeat: no-repeat;
 }
 
 @media all and (max-width: 360px) {
-  :root {
-    font-size: 14px;
-  }
+	:root {
+		font-size: 14px;
+	}
 }
 
 #app {

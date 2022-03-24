@@ -1,5 +1,4 @@
 export const renderExchangeRatesTable = exchangeRates => {
-	console.log(exchangeRates);
 	document
 		.querySelector('#exchange-rates-results table')
 		.classList.remove('visually-hidden');
