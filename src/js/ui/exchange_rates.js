@@ -1,7 +1,6 @@
 export const renderExchangeRatesTable = exchangeRates => {
-	document
-		.querySelector('#exchange-rates-results table')
-		.classList.remove('visually-hidden');
+	const $table = document.querySelector('#exchange-rates-results table');
+	$table.classList.remove('visually-hidden');
 	const $tbody = document.querySelector('#exchange-rates-results tbody');
 	const currencyEntries = Object.entries(exchangeRates);
 	for (let [name, value] of currencyEntries) {
