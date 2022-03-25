@@ -6,8 +6,12 @@
 
 ### Unit testing with Jest
 
-![Test Coverage](/coverage.PNG)
+![Test Coverage](/coverage_img/coverage.PNG)
+
+To run tests locally and collect coverage run `npm run jest:coverage`
 
 ### E2E testing with cypress
 
-![Cypress Assertions](/cypress.PNG)
+![Cypress Assertions](/coverage_img/cypress.PNG)
+
+To run tests locally host on :5500 and run `npm run cy:open`
