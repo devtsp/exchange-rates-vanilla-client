@@ -37,5 +37,9 @@ describe('Currencies are correctly rendered inside <select> elements as <option>
 		expect($baseSelection.children[1].querySelector('span').textContent).toBe(
 			'TEST_2 (2)'
 		);
+		renderAvailableCurrenciesOptionLists([
+			['USD', '1'],
+			['ARS', '2'],
+		]);
 	});
 });

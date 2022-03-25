@@ -31,7 +31,6 @@ describe('Exchange rates', () => {
 		});
 	});
 });
-
 describe('Pair conversion', () => {
 	test('fetchPairConversion', () => {
 		expect.assertions(1);
@@ -39,6 +38,25 @@ describe('Pair conversion', () => {
 			expect(global.fetch).toHaveBeenCalledWith(
 				`${API_URL}/${KEY}/pair/FOO/BAR/123`
 			);
+		});
+	});
+});
+
+describe('Error when response not ok', () => {
+	test('fetchPairConversion', () => {
+		global.fetch = jest.fn(
+			() =>
+				new Promise(res =>
+					res({
+						ok: false,
+						status: 'test',
+						json: () => new Promise(r => r({})),
+					})
+				)
+		);
+		expect.assertions(1);
+		return fetchPairConversion(123, 'FOO', 'BAR').catch(error => {
+			expect(error.message).toBe('test');
 		});
 	});
 });

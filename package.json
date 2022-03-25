@@ -4,7 +4,7 @@
 	"description": "# [Launch App](https://devtsp.github.io/exchange-rates-api-interface/)",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"jest:coverage": "jest --collectCoverage",
 		"cy:open": "cypress open"
 	},
 	"repository": {
