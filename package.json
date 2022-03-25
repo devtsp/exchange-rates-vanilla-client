@@ -1,7 +1,7 @@
 {
 	"name": "exchange-rates-api-interface",
 	"version": "1.0.0",
-	"description": "# [Launch App](https://devtsp.github.io/exchange-rates-api-interface/)",
+	"description": "Exchange Rates App",
 	"main": "index.js",
 	"scripts": {
 		"jest:coverage": "jest --collectCoverage",
@@ -12,7 +12,7 @@
 		"url": "git+https://github.com/devtsp/exchange-rates-api-interface.git"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Tomas Paez",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/devtsp/exchange-rates-api-interface/issues"
